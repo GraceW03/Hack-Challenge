@@ -24,6 +24,12 @@ class Category(db.Model):
 
   def get_flashcards(self):
       return [f.simple_serialize() for f in self.flashcards]
+  
+  def update_category(self, **kwargs):
+      if "name" in kwargs:
+         self.name = kwargs["name"]
+      if "description" in kwargs:
+        self.description = kwargs["description"]
 
   def serialize(self):
     """

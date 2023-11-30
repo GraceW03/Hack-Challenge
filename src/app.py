@@ -41,7 +41,7 @@ def get_all_categories():
     """
     Endpoint for getting all categories
     """
-    categories = [category.serialize() for category in Category.query.all()]
+    categories = [category.simple_serialize() for category in Category.query.all()]
     return success_response({"categories": categories})
 
 @app.route("/api/categories/", methods=["POST"])
@@ -60,7 +60,7 @@ def create_category():
     db.session.commit()
     return success_response(new_category.serialize(), 201)
 
-@app.route("/api/categories/<int:id>")
+@app.route("/api/categories/<int:id>/")
 def get_category_by_id(id):
     """
     Endpoint for getting a category by id
@@ -68,7 +68,7 @@ def get_category_by_id(id):
     category = Category.query.filter_by(id=id).first()
     if category is None:
         return failure_response("Category not found")
-    return success_response(category.simple_serialize())
+    return success_response(category.serialize())
 
 @app.route("/api/categories/<int:id>/", methods=["DELETE"])
 def delete_category(id):
@@ -82,8 +82,23 @@ def delete_category(id):
     db.session.commit()
     return success_response(category.serialize())
 
-
-
+@app.route("/api/categories/<int:id>/", methods=["POST"])
+def update_category(id):
+    """
+    Endpoint for updating a category by id
+    """
+    category = Category.query.filter_by(id=id).first()
+    if category is None:
+        return failure_response("Category not found")
+    body = json.loads(request.data)
+    name = body.get("name")
+    description = body.get("description")
+    if name is not None:
+      category.update_category(name=name)
+    if description is not None:
+      category.update_category(description=description)
+    db.session.commit()
+    return success_response(category.serialize())
 
 
 
