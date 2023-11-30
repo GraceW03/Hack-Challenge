@@ -4,6 +4,8 @@ from db import db
 from flask import Flask
 from flask import request
 import os
+from db import Category
+from db import Flashcard
 
 # define db filename
 db_filename = "quizrizz.db"
@@ -31,3 +33,14 @@ def failure_response(message, code=404):
     Generalized failure response function
     """
     return json.dumps({"error": message}), code
+
+
+
+app.route("/api/flashcards/", methods=["GET"])
+def get_all_flashcards:
+    """
+    Endpoint for getting all courses
+    """
+
+    courses = [course.simple_serialize() for course in Course.query.all()]
+    return success_response({"courses": courses})
