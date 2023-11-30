@@ -3,7 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
-
 class Category(db.Model):
   """
   Category Model
@@ -22,6 +21,9 @@ class Category(db.Model):
     self.name = kwargs.get("name")
     self.description = kwargs.get("description", "")
     self.folder = kwargs.get("folder")
+
+  def get_flashcards(self):
+      return [f.simple_serialize() for f in self.flashcards]
 
   def serialize(self):
     """
