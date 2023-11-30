@@ -23,10 +23,11 @@ class NetworkManager {
             .responseDecodable(of: [placeholder].self, decoder: decoder) { response in
                 switch response.result {
                 case .success(let placeholder):
-                    print("Successfully fetched \(placeholder.count) recipes")
+                    print("Successfully fetched \(placeholder.count) placeholder")
                     completion(placeholder)
                 case .failure(let error):
                     print("Error in NetworkManager.placeholder: \(error.localizedDescription)")
                 }
             }
     }
+}
