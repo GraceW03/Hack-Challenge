@@ -47,7 +47,7 @@ def get_all_categories():
 @app.route("/api/categories/", methods=["POST"])
 def create_category():
     """
-    Endpoint for creating a new course
+    Endpoint for creating a new category
     """
     body = json.loads(request.data)
     name = body.get("name")
@@ -71,9 +71,9 @@ def get_category_by_id(id):
     return success_response(category.simple_serialize())
 
 @app.route("/api/categories/<int:id>/", methods=["DELETE"])
-def delete_course(id):
+def delete_category(id):
     """
-    Endpoint for deleting a course by id
+    Endpoint for deleting a category by id
     """
     category = Category.query.filter_by(id=id).first()
     if category is None:
@@ -85,14 +85,21 @@ def delete_course(id):
 
 
 
-app.route("/api/flashcards/", methods=["GET"])
-def get_all_flashcards:
+
+
+@app.route("/api/flashcards/<int:category_id>/", methods=["GET"])
+def get_all_flashcards_in_category():
     """
     Endpoint for getting all flashcards in a category with category_id
     """
+    category = get_category_by_id(category_id)
+    if type(category) != Category:
+        return category
+
+    return success_response(category.get_flashcards())
 
 
-app.route("/api/flashcards-random/", methods=["GET"])
+@app.route("/api/flashcards-random/", methods=["GET"])
 def get_random_flashcard_in_category(category_id):
     """
     Endpoint for a random flashcard in a category with category_id
@@ -106,7 +113,7 @@ def get_random_flashcard_in_category(category_id):
     return success_response((random.choice(flashcards)).serialize())
 
 
-app.route("/api/flashcards/<int:category_id>", methods=["POST"])
+@app.route("/api/flashcards/<int:category_id>/", methods=["POST"])
 def create_flashcard(category_id):
     """
     Endpoint for creating a new flashcard in the category category_id
