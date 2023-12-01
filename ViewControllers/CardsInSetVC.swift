@@ -40,7 +40,7 @@ private let studyButton = UIButton()
 
       cardCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
       cardCollectionView.alwaysBounceVertical = true			
-	    cardCollectionView.register(SetCell.self, forCellWithReuseIdentifier: SetCell.reuse) // 5
+	    cardCollectionView.register(CardCell.self, forCellWithReuseIdentifier: CardCell.reuse) // 5
 	    cardCollectionView.delegate = self 
 	    cardCollectionView.dataSource = self 
 		
@@ -57,28 +57,28 @@ private let studyButton = UIButton()
 
 }
 
-extension InsideFolderVC: UICollectionViewDelegate {
-  
+extension CardsInSetVC: UICollectionViewDelegate {
+
 }
 
-extension InsideFolderVC: UICollectionViewDataSource {
+extension CardsInSetVC: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    guard let rec = collectionView.dequeueReusableCell(withReuseIdentifier: SetCell.reuse, for: indexPath) as? 
-    SetCell 
+    guard let rec = cardCollectionView.dequeueReusableCell(withReuseIdentifier: CardCell.reuse, for: indexPath) as? 
+    CardCell 
     else { return UICollectionViewCell() }
-      let sett = sets[indexPath.item]
+      let card = cards[indexPath.item]
       rec.configure(set: sett)
       return rec
   }
 
   func collectionView(_ collectionView: UICollectionView, 
   numberOfItemsInSection section: Int) -> Int {
-    return sets.count
+    return cards.count
   }
 
 } 
 
-extension InsideFolderVC: UICollectionViewDelegateFlowLayout {
+extension CardsInSetVC: UICollectionViewDelegateFlowLayout {
     // `sizeForItemAt`
     // Additional functions here
     let collectionViewWidth = collectionView.bounds.width
