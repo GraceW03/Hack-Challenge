@@ -86,7 +86,7 @@ class Flashcard(db.Model):
             "category": (Category.query.get(self.category_id)).simple_serialize()
         }
   
-  def serialize(self):
+  def simple_serialize(self):
         """
         Serialize a Flashcard object
         """

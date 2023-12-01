@@ -111,10 +111,10 @@ def get_all_flashcards_in_category():
     if type(category) != Category:
         return category
 
-    return success_response(category.get_flashcards())
+    return success_response({"flashcards": category.get_flashcards()})
 
 
-@app.route("/api/flashcards-random/", methods=["GET"])
+@app.route("/api/flashcards-random/<int:category_id>/", methods=["GET"])
 def get_random_flashcard_in_category(category_id):
     """
     Endpoint for a random flashcard in a category with category_id
@@ -125,7 +125,7 @@ def get_random_flashcard_in_category(category_id):
     if len(flashcards) == 0:
         return failure_response("No flashcards in this category")
     
-    return success_response((random.choice(flashcards)).serialize())
+    return success_response((random.choice(flashcards)).simple_serialize())
 
 
 @app.route("/api/flashcards/<int:category_id>/", methods=["POST"])
@@ -138,7 +138,7 @@ def create_flashcard(category_id):
         body = json.loads(request.data)
         content = body.get("content")
         answer = body.get("answer")
-        if code == None or body == None:
+        if content == None or answer == None:
             return failure_response("Wrong info provided", 400)
     except:
         return failure_response("json fail", 400)
@@ -148,10 +148,10 @@ def create_flashcard(category_id):
     
     db.session.add(new_flashcard)
     db.session.commit()
-    return success_response(new_flashcard.serialize(), 201)
+    return success_response(new_flashcard.simple_serialize(), 201)
 
 
-@app.route("/api/courses/<int:flashcard_id>/", methods=["DELETE"])
+@app.route("/api/flashcards/<int:flashcard_id>/", methods=["DELETE"])
 def delete_flashcard(flashcard_id):
     """
     Endpoint for deleting the flashcard with id flashcard_id
