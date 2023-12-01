@@ -110,3 +110,60 @@ class Flashcard(db.Model):
             "content": self.content,
             "answer": self.answer
         }
+
+
+
+
+class User(db.Model):
+  """
+  User Model
+  """
+  __tablename__ = "user"
+
+  id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  username = db.Column(db.String, nullable=False, unique=True)
+  password_digest = db.Column(db.String, nullable=False, unique=False)
+  
+  session_token = db.Column(db.String, nullable=False, unique=False)
+  session_expiration = db.Column(db.Datetime, nullable=False, unique=False)
+  refresh_token = db.Column(db.String, nullable=False, unique=False)
+
+  def __init__(self, **kwargs):
+        """
+        Initializes a User Object
+        """
+        self.username = kwargs.get("username")
+        self.password_digest = bcrypt.hashpw(kwargs.get("password").encode("utf8"), bcrypt.gensalt(rounds=13))
+        self.renew_session()
+
+  def _urlsafe_base_64(self):
+    """
+    Used to randomly generate/refresh tokens
+    """
+    return hashlib.sha1(os.urandom(64)).hexdigest()
+
+  def renew_session(self):
+    """
+    Generates new tokens and resets expiration time
+    """
+    self.session_token = self._urlsafe_base_64()
+    self.refresh_token = self._urlsafe_base_64()
+    self.session_expiration = datetime.datetime.now() + datetime.timedelta(days=1)
+
+  def verify_password(self):
+    """
+    Verifys password
+    """
+    return bcrypt.checkpw(password.encode("utf8"), self.password_digest)
+  
+  def verify_session_token(self, session_token):
+  """
+  Verifys session token
+  """
+  return session_token == self.session_token and datetime.datetime.now() < self.session_expiration
+
+  def verify_refresh_token(self, refresh_token):
+  """
+  Verifys refresh token
+  """
+  return refresh_token == self.refresh_token

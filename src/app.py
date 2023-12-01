@@ -8,6 +8,9 @@ import os
 from db import Category
 from db import Flashcard
 
+import users_dao
+import datetime
+
 # define db filename
 db_filename = "quizrizz.db"
 app = Flask(__name__)
