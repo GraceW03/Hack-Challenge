@@ -39,7 +39,7 @@ class Category(db.Model):
       "id": self.id,
       "name": self.name,
       "description": self.description,
-      "foler": self.folder,
+      "folder": self.folder,
       "flashcards": [f.simple_serialize() for f in self.flashcards]
     }
 
@@ -86,7 +86,7 @@ class Flashcard(db.Model):
             "category": (Category.query.get(self.category_id)).simple_serialize()
         }
   
-  def serialize(self):
+  def simple_serialize(self):
         """
         Serialize a Flashcard object
         """
