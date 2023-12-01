@@ -2,7 +2,7 @@ import Foundation
 import SnapKit
 import UIKit
 
-class CreateFolderVC: UIViewController {
+class DisplaySetVC : UIViewController {
   
   //MARK - Properties (view)
     
