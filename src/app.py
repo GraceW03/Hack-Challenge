@@ -241,6 +241,7 @@ def login():
         return json.dumps({"error": "Invalid credentials"})
 
     user.renew_session()
+    db.session.commit()
     return json.dumps({
         "session_token": user.session_token,
         "session_expiration": str(user.session_expiration),
@@ -298,7 +299,7 @@ def secret_message():
     if not user or not user.verify_session_token(session_token):
         return json.dumps({"error": "invalid session token"})
     
-    return json.dumps({"message": "hello" + user.first_name})
+    return json.dumps({"message": "hello " + user.username})
 
 
 if __name__ == "__main__":
