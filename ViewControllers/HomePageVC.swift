@@ -105,6 +105,7 @@ class HomePageVC: UIViewController {
 
     @objc private func createButtonTapped() {
         // Handle createButton tap
+        // Push to Folder VC screen
     }
 
     @objc private func seeProfileButtonTapped() {
