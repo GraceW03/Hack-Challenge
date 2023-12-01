@@ -56,16 +56,17 @@ class DisplayFoldersVC: UIViewController {
 
   // MARK: - Button Actions
 
-  func showDescription(recipe: Recipe) {
-        let recipeDetailVC = DescriptionVC(recipe: recipe, delegate: self)
-        navigationController?.pushViewController(recipeDetailVC, animated: true)
-    }
+  func expandFolder(folder : Folder) {
+    let insideFolderVC = InsideFolderVC(folder: folder, delegate: self)
+    navigationController?.pushViewController(insideFolderVC, animated: true)
+  }
 
 }
 
 extension DisplayFoldersVC : NewFolders {
   addNewFolder(newFolder : String) {
-  folders.add(newFolder : String)
+  Folder f = Folder(name : newFolder, cards : [])
+  folders.append(f)
   }
 }
 

@@ -45,9 +45,9 @@ class FolderCell : UICollectionViewCell {
             make.bottom.equalToSuperView()
             make.height.equalTo(40)
         }
-        
+   
   }
 
-  
+
 
 }

@@ -4,4 +4,5 @@ import SnapKit
 
 public struct Folder : Codable {
     let name : String
+    let cards : [Card]
 }
