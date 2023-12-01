@@ -12,7 +12,7 @@ class Category(db.Model):
   name = db.Column(db.String, nullable=False)
   description = db.Column(db.String)
   folder = db.Column(db.String, nullable=False)
-  flashcards = db.relationship("flashcard", cascade="delete")
+  flashcards = db.relationship("Flashcard", cascade="delete")
 
   def __init__(self, **kwargs):
     """
@@ -39,7 +39,7 @@ class Category(db.Model):
       "id": self.id,
       "name": self.name,
       "description": self.description,
-      "foler": self.folder,
+      "folder": self.folder,
       "flashcards": [f.simple_serialize() for f in self.flashcards]
     }
 
@@ -64,7 +64,7 @@ class Flashcard(db.Model):
   id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   content = db.Column(db.String, nullable=False)
   answer = db.Column(db.String, nullable=False)
-  category_id = db.Column(db.Integer, db.ForeignKey("category_id"), nullable=False)
+  category_id = db.Column(db.Integer, db.ForeignKey("category.id"), nullable=False)
 
 
   def __init__(self, **kwargs):
