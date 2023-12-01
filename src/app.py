@@ -129,7 +129,7 @@ def get_random_flashcard_in_category(category_id):
     if len(flashcards) == 0:
         return failure_response("No flashcards in this category")
     
-    return success_response((random.choice(flashcards)).simple_serialize())
+    return success_response(random.choice(flashcards))
 
 
 @app.route("/api/flashcards/<int:category_id>/", methods=["POST"])
@@ -169,6 +169,29 @@ def delete_flashcard(flashcard_id):
     db.session.delete(flashcard)
     db.session.commit()
     return success_response(flashcard.serialize())
+
+@app.route("/api/flashcards-update/<int:id>/", methods=["POST"])
+def update_flashcard(flashcard_id):
+    """
+    Endpoint for updating the flashcard with id flashcard_id
+    """
+    flashcard = Flashcard.query.filter_by(flashcard_id=flashcard_id).first()
+    if flashcard is None:
+        return failure_response("Flashcard not found")
+    body = json.loads(request.data)
+    content = body.get("content")
+    answer = body.get("answer")
+
+    if content is None and answer is None:
+        return failure_response("Wrong info provided", 400)
+        
+    if content is not None:
+        flashcard.update_flashcard(content=content)
+    if answer is not None:
+        flashcard.update_flashcard(answer=answer)
+
+    db.session.commit()
+    return success_response(flashcard.simple_serialize())
 
 
 if __name__ == "__main__":

@@ -23,12 +23,18 @@ class Category(db.Model):
     self.folder = kwargs.get("folder")
 
   def get_flashcards(self):
-      return [f.simple_serialize() for f in self.flashcards]
+    """
+    Returns the category's flashcards
+    """
+    return [f.simple_serialize() for f in self.flashcards]
   
   def update_category(self, **kwargs):
-      if "name" in kwargs:
+    """
+    Updates a category to new name and/or description
+    """
+    if "name" in kwargs:
          self.name = kwargs["name"]
-      if "description" in kwargs:
+    if "description" in kwargs:
         self.description = kwargs["description"]
 
   def serialize(self):
@@ -74,6 +80,15 @@ class Flashcard(db.Model):
         self.content = kwargs.get("content")
         self.answer = kwargs.get("answer")
         self.category_id = kwargs.get("category_id")
+
+  def update_flashcard(self, **kwargs):
+    """
+    Updates a flashcard to new content and/or answer
+    """
+    if "content" in kwargs:
+         self.content = kwargs["content"]
+    if "answer" in kwargs:
+        self.answer = kwargs["answer"]
 
   def serialize(self):
         """
