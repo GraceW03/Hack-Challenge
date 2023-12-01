@@ -36,6 +36,7 @@ def failure_response(message, code=404):
     return json.dumps({"error": message}), code
 
 # -- CATEGORY ROUTES ------------------------------------------------------
+
 @app.route("/api/categories/")
 def get_all_categories():
     """
@@ -90,9 +91,11 @@ def update_category(id):
     category = Category.query.filter_by(id=id).first()
     if category is None:
         return failure_response("Category not found")
+    
     body = json.loads(request.data)
     name = body.get("name")
     description = body.get("description")
+
     if name is not None:
       category.update_category(name=name)
     if description is not None:
@@ -100,15 +103,15 @@ def update_category(id):
     db.session.commit()
     return success_response(category.serialize())
 
-
+# -- FLASHCARD ROUTES ------------------------------------------------------
 
 @app.route("/api/flashcards/<int:category_id>/", methods=["GET"])
-def get_all_flashcards_in_category():
+def get_all_flashcards_in_category(category_id):
     """
     Endpoint for getting all flashcards in a category with category_id
     """
-    category = get_category_by_id(category_id)
-    if type(category) != Category:
+    category = Category.query.filter_by(id=category_id).first()
+    if not isinstance(category, Category):
         return category
 
     return success_response({"flashcards": category.get_flashcards()})
@@ -120,7 +123,8 @@ def get_random_flashcard_in_category(category_id):
     Endpoint for a random flashcard in a category with category_id
     """
     
-    flashcards = category["flashcards"]
+    category = Category.query.filter_by(id=category_id).first()
+    flashcards = category.get_flashcards()
 
     if len(flashcards) == 0:
         return failure_response("No flashcards in this category")
@@ -143,12 +147,14 @@ def create_flashcard(category_id):
     except:
         return failure_response("json fail", 400)
 
+    print("The id is", category_id)
     
-    new_flashcard = Course(content=content, answer=answer)
+    new_flashcard = Flashcard(content=content, answer=answer, 
+                              category_id=category_id)
     
     db.session.add(new_flashcard)
     db.session.commit()
-    return success_response(new_flashcard.simple_serialize(), 201)
+    return success_response(new_flashcard.serialize(), 201)
 
 
 @app.route("/api/flashcards/<int:flashcard_id>/", methods=["DELETE"])
@@ -165,3 +171,6 @@ def delete_flashcard(flashcard_id):
     return success_response(flashcard.serialize())
 
 
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8000))
+    app.run(host="0.0.0.0", port=port)
