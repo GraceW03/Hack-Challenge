@@ -17,6 +17,8 @@ class Category(db.Model):
   name = db.Column(db.String, nullable=False)
   description = db.Column(db.String)
   folder = db.Column(db.String, nullable=False)
+
+  user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
   flashcards = db.relationship("Flashcard", cascade="delete")
 
   def __init__(self, **kwargs):
@@ -132,6 +134,8 @@ class User(db.Model):
   session_token = db.Column(db.String, nullable=False, unique=False)
   session_expiration = db.Column(db.DateTime, nullable=False, unique=False)
   refresh_token = db.Column(db.String, nullable=False, unique=False)
+
+  categories = db.relationship('Category', backref='user')
 
   def __init__(self, **kwargs):
         """
