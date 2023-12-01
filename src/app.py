@@ -28,9 +28,11 @@ with app.app_context():
 def extract_token(request):
     auth_header = request.headers.get("Authorization")
     if auth_header is None:
-        return False, json.dumps({"error": "Invalid Authorization header"})
+        return False, json.dumps({"error": "Missing Authorization header"})
     
-    bearer_
+    bearer_token = auth_header.replace("Bearer", "").strip()
+    if not bearer_token:
+        return False, json.dumps({"error": "Invalid Authorization header"})
     return True, bearer_token
 
 # generalized response formats
@@ -250,8 +252,22 @@ def logout():
     pass
 
 @app.route("/session/", methods=["POST"])
-def session():
-    pass
+def refresh_session():
+    success, response = extract_token(request)
+    if not success:
+        return response
+    refresh_token = response
+
+    try:
+        user = users_dao.renew_session(refresh_token)
+    except:
+        return json.dumps({"error": "Invalid refresh token"})
+    
+    return json.dumps({
+        "session_token": user.session_token,
+        "session_expiration": str(user.session_expiration),
+        "refresh_token": user.refresh_token
+    })
 
 @app.route("/secret/", methods=["GET"])
 def secret_message():
