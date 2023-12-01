@@ -4,12 +4,11 @@ import SnapKit
 
 class InitialPageVC: UIViewController {
     //MARK - Properties (view)
-    
-    private let logoIcon = UIImageView() // circular, upper center of the ios device
-    private let appName = UILabel() // directly under the logo, centered on the screen in the scenter 
-    private let appDescripation = UILabel() // directly under app name, the text is also centered
-    private let logInButton = UIButton() // under app descrip 
-    private let signUpButton = UIButton() // under 
+    private let logoIcon = UIImageView()
+    private let appName = UILabel()  
+    private let appDescripation = UILabel()
+    private let logInButton = UIButton() 
+    private let signUpButton = UIButton() 
    
     // MARK - viewDidLoad
     override func viewDidLoad() {
@@ -23,9 +22,7 @@ class InitialPageVC: UIViewController {
         setupLogInButton() // pushing this takes you to the next vc - log in
         setupSignUpButton() // pushing this takes you to the next 
         setupPushVCButton() //
-    }
-        
-   
+     }
     }
 
     // MARK - Set Up Views
@@ -44,9 +41,8 @@ class InitialPageVC: UIViewController {
     }
     }
 
-
     private func setupAppName() {
-        appName.text = "Quizz Rizz"
+        appName.text = "QuizzRizz"
         appName.font = UIFont.boldSystemFont(ofSize: 24)
         view.addSubview(appName)
         
@@ -57,7 +53,7 @@ class InitialPageVC: UIViewController {
     }
 
     private func setupAppDescription() {
-        appDescription.text = "Your app description goes here"
+        appDescription.text = "Rizz your crush with your top grades! Start studying with Quizz Rizz"
         appDescription.textAlignment = .center
         view.addSubview(appDescription)
         
