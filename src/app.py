@@ -25,6 +25,14 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
+def extract_token(request):
+    auth_header = request.headers.get("Authorization")
+    if auth_header is None:
+        return False, json.dumps({"error": "Invalid Authorization header"})
+    
+    bearer_
+    return True, bearer_token
+
 # generalized response formats
 def success_response(data, code=200):
     """
@@ -193,6 +201,62 @@ def update_flashcard(flashcard_id):
 
     db.session.commit()
     return success_response(flashcard.simple_serialize())
+
+
+
+
+@app.route("/register/", methods=["POST"])
+def register_account():
+    body = json.loads(request.data)
+    username = body.get("username")
+    password = body.get("password")
+
+    if username is None or password is None:
+        return json.dumps({"error": "Invalid body"})
+
+    created, user = users_dao.create_user(username, password)
+    if not created:
+        return json.dumps({"error": "User already exists"})
+
+    return json.dumps({
+        "session_token": user.session_token,
+        "session_expiration": str(user.session_expiration),
+        "refresh_token": user.refresh_token
+    })
+
+@app.route("/login/", methods=["POST"])
+def login():
+    body = json.loads(request.data)
+    username = body.get("username")
+    password = body.get("password")
+
+    if username is None or password is None:
+        return json.dumps({"error": "Invalid body"})
+    
+    success, user = users_dao.verify_credentials(username, password)
+
+    if not success:
+        return json.dumps({"error": "Invalid credentials"})
+
+    user.renew_session()
+    return json.dumps({
+        "session_token": user.session_token,
+        "session_expiration": str(user.session_expiration),
+        "refresh_token": user.refresh_token
+    })
+
+@app.route("/logout/", methods=["POST"])
+def logout():
+    pass
+
+@app.route("/session/", methods=["POST"])
+def session():
+    pass
+
+@app.route("/secret/", methods=["GET"])
+def secret_message():
+    pass
+
 
 
 if __name__ == "__main__":
