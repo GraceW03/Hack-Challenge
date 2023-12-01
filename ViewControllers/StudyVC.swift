@@ -5,10 +5,8 @@
 import UIKit
 import SnapKit
 
-import UIKit
-import SnapKit
 
-class HomePageVC: UIViewController {
+class StudyVC: UIViewController {
     
     // MARK - Properties (view)
     private let profileIcon = UIImageView()
@@ -111,4 +109,3 @@ class HomePageVC: UIViewController {
         // Handle seeProfileButton tap
     }
 }
-

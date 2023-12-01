@@ -11,15 +11,10 @@ class LogInVC: UIViewController {
    
     //MARK - Properties (view)
     private let pageHeader = UILabel() 
-
     private let usernameText = UILabel() 
-
     private let inputUsername  = UILabel() 
-
     private let passwordText = UIButton()
-
     private let inputPassword = UIButton() 
-
     private let logInButton = UIButton() 
    
     // MARK - viewDidLoad
