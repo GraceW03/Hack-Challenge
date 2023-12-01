@@ -146,15 +146,13 @@ def create_flashcard(category_id):
             return failure_response("Wrong info provided", 400)
     except:
         return failure_response("json fail", 400)
-
-    print("The id is", category_id)
     
     new_flashcard = Flashcard(content=content, answer=answer, 
                               category_id=category_id)
     
     db.session.add(new_flashcard)
     db.session.commit()
-    return success_response(new_flashcard.serialize(), 201)
+    return success_response(new_flashcard.simple_serialize(), 201)
 
 
 @app.route("/api/flashcards/<int:flashcard_id>/", methods=["DELETE"])
@@ -168,14 +166,14 @@ def delete_flashcard(flashcard_id):
 
     db.session.delete(flashcard)
     db.session.commit()
-    return success_response(flashcard.serialize())
+    return success_response(flashcard.simple_serialize())
 
-@app.route("/api/flashcards-update/<int:id>/", methods=["POST"])
+@app.route("/api/flashcards-update/<int:flashcard_id>/", methods=["POST"])
 def update_flashcard(flashcard_id):
     """
     Endpoint for updating the flashcard with id flashcard_id
     """
-    flashcard = Flashcard.query.filter_by(flashcard_id=flashcard_id).first()
+    flashcard = Flashcard.query.filter_by(id=flashcard_id).first()
     if flashcard is None:
         return failure_response("Flashcard not found")
     body = json.loads(request.data)
