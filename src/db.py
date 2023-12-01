@@ -1,8 +1,8 @@
 import datetime
 import hashlib
 import os
-
 import bcrypt
+
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -130,7 +130,7 @@ class User(db.Model):
   password_digest = db.Column(db.String, nullable=False, unique=False)
   
   session_token = db.Column(db.String, nullable=False, unique=False)
-  session_expiration = db.Column(db.Datetime, nullable=False, unique=False)
+  session_expiration = db.Column(db.DateTime, nullable=False, unique=False)
   refresh_token = db.Column(db.String, nullable=False, unique=False)
 
   def __init__(self, **kwargs):
@@ -155,7 +155,7 @@ class User(db.Model):
     self.refresh_token = self._urlsafe_base_64()
     self.session_expiration = datetime.datetime.now() + datetime.timedelta(days=1)
 
-  def verify_credentials(self, password):
+  def verify_password(self, password):
     """
     Verifies password
     """
