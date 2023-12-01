@@ -1,51 +1,48 @@
 import UIKit
 import SnapKit
 
-
 class InitialPageVC: UIViewController {
-    //MARK - Properties (view)
+    // MARK: - Properties (view)
     private let logoIcon = UIImageView()
-    private let appName = UILabel()  
-    private let appDescripation = UILabel()
-    private let logInButton = UIButton() 
-    private let signUpButton = UIButton() 
-   
-    // MARK - viewDidLoad
+    private let appName = UILabel()
+    private let appDescription = UILabel()
+    private let logInButton = UIButton()
+    private let signUpButton = UIButton()
+
+    // MARK: - viewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
 
-        //helper methods for setting up views
+        // Helper methods for setting up views
         setupLogoIcon()
-        setupAppName() // title is Quizz Rizz
+        setupAppName()
         setupAppDescription()
-        setupLogInButton() // pushing this takes you to the next vc - log in
-        setupSignUpButton() // pushing this takes you to the next 
-        setupPushVCButton() //
-     }
+        setupLogInButton()
+        setupSignUpButton()
     }
 
-    // MARK - Set Up Views
+    // MARK: - Set Up Views
     private func setupLogoIcon() {
-    logoIcon.image = UIImage(named: "placeholderlogo")
-    logoIcon.contentMode = .scaleAspectFit
-    logoIcon.layer.cornerRadius = logoIcon.frame.width / 2
-    logoIcon.layer.masksToBounds = true
-    
-    view.addSubview(logoIcon)
-    
-    logoIcon.snp.makeConstraints { make in
-        make.centerX.equalToSuperview()
-        make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
-        make.width.height.equalTo(80)
-    }
+        logoIcon.image = UIImage(named: "placeholderlogo")
+        logoIcon.contentMode = .scaleAspectFit
+        logoIcon.layer.cornerRadius = logoIcon.frame.width / 2
+        logoIcon.layer.masksToBounds = true
+
+        view.addSubview(logoIcon)
+
+        logoIcon.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
+            make.width.height.equalTo(80)
+        }
     }
 
     private func setupAppName() {
         appName.text = "QuizzRizz"
         appName.font = UIFont.boldSystemFont(ofSize: 24)
         view.addSubview(appName)
-        
+
         appName.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(logoIcon.snp.bottom).offset(20)
@@ -56,7 +53,7 @@ class InitialPageVC: UIViewController {
         appDescription.text = "Rizz your crush with your top grades! Start studying with Quizz Rizz"
         appDescription.textAlignment = .center
         view.addSubview(appDescription)
-        
+
         appDescription.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(appName.snp.bottom).offset(10)
@@ -69,7 +66,7 @@ class InitialPageVC: UIViewController {
         logInButton.backgroundColor = .blue
         logInButton.addTarget(self, action: #selector(logInButtonTapped), for: .touchUpInside)
         view.addSubview(logInButton)
-        
+
         logInButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(appDescription.snp.bottom).offset(20)
@@ -84,7 +81,7 @@ class InitialPageVC: UIViewController {
         signUpButton.backgroundColor = .green
         signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
         view.addSubview(signUpButton)
-        
+
         signUpButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(logInButton.snp.bottom).offset(10)
@@ -92,21 +89,18 @@ class InitialPageVC: UIViewController {
             make.height.equalTo(40)
         }
     }
-   
+
     // MARK: - Button Actions
     @objc private func logInButtonTapped() {
-        // Implement log in button action here
         let logInVC = LogInViewController() // Replace with your actual LogInViewController
         navigationController?.pushViewController(logInVC, animated: true)
     }
 
     @objc private func signUpButtonTapped() {
-        // Implement sign up button action here
         let signUpVC = SignUpViewController() // Replace with your actual SignUpViewController
         navigationController?.pushViewController(signUpVC, animated: true)
     }
-
-
+}
 
 
     
