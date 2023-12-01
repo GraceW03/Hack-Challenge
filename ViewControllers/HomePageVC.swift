@@ -33,6 +33,9 @@ class HomePageVC: UIViewController {
     }
 
     // MARK - Set Up Views
+    // ...
+
+    // MARK: - Set Up Views
 
     private func setupProfileIcon() {
         profileIcon.translatesAutoresizingMaskIntoConstraints = false
@@ -40,59 +43,80 @@ class HomePageVC: UIViewController {
         view.addSubview(profileIcon)
         // Set up constraints for profileIcon using SnapKit
         profileIcon.snp.makeConstraints { make in
-            // Add constraints for profileIcon
+            make.centerX.equalToSuperview()
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
+            make.width.height.equalTo(80)
         }
     }
 
     private func setupPageHeader() {
         pageHeader.translatesAutoresizingMaskIntoConstraints = false
-        
+        pageHeader.text = "Your Page Header"
+        // Customize pageHeader properties
         view.addSubview(pageHeader)
         // Set up constraints for pageHeader using SnapKit
         pageHeader.snp.makeConstraints { make in
-            // Add constraints for pageHeader
+            make.centerX.equalToSuperview()
+            make.top.equalTo(profileIcon.snp.bottom).offset(16)
         }
     }
 
     private func setupPageText() {
         pageText.translatesAutoresizingMaskIntoConstraints = false
+        pageText.text = "Your Page Text"
         // Customize pageText properties
         view.addSubview(pageText)
         // Set up constraints for pageText using SnapKit
         pageText.snp.makeConstraints { make in
-            // Add constraints for pageText
+            make.centerX.equalToSuperview()
+            make.top.equalTo(pageHeader.snp.bottom).offset(8)
         }
     }
 
     private func setupStudyButton() {
         studyButton.translatesAutoresizingMaskIntoConstraints = false
+        studyButton.setTitle("Study", for: .normal)
+        studyButton.backgroundColor = UIColor.blue
         // Customize studyButton properties
         view.addSubview(studyButton)
         // Set up constraints for studyButton using SnapKit
         studyButton.snp.makeConstraints { make in
-            // Add constraints for studyButton
+            make.centerX.equalToSuperview()
+            make.top.equalTo(pageText.snp.bottom).offset(24)
+            make.width.equalTo(200)
+            make.height.equalTo(40)
         }
         studyButton.addTarget(self, action: #selector(studyButtonTapped), for: .touchUpInside)
     }
 
     private func setupCreateButton() {
         createButton.translatesAutoresizingMaskIntoConstraints = false
+        createButton.setTitle("Create", for: .normal)
+        createButton.backgroundColor = UIColor.green
         // Customize createButton properties
         view.addSubview(createButton)
         // Set up constraints for createButton using SnapKit
         createButton.snp.makeConstraints { make in
-            // Add constraints for createButton
+            make.centerX.equalToSuperview()
+            make.top.equalTo(studyButton.snp.bottom).offset(16)
+            make.width.equalTo(200)
+            make.height.equalTo(40)
         }
         createButton.addTarget(self, action: #selector(createButtonTapped), for: .touchUpInside)
     }
 
     private func setupSeeProfileButton() {
         seeProfileButton.translatesAutoresizingMaskIntoConstraints = false
+        seeProfileButton.setTitle("See Profile", for: .normal)
+        seeProfileButton.backgroundColor = UIColor.orange
         // Customize seeProfileButton properties
         view.addSubview(seeProfileButton)
         // Set up constraints for seeProfileButton using SnapKit
         seeProfileButton.snp.makeConstraints { make in
-            // Add constraints for seeProfileButton
+            make.centerX.equalToSuperview()
+            make.top.equalTo(createButton.snp.bottom).offset(16)
+            make.width.equalTo(200)
+            make.height.equalTo(40)
         }
         seeProfileButton.addTarget(self, action: #selector(seeProfileButtonTapped), for: .touchUpInside)
     }
@@ -100,16 +124,18 @@ class HomePageVC: UIViewController {
     // MARK: - Button Actions
 
     @objc private func studyButtonTapped() {
-        // Handle studyButton tap
+        let studyVC = StudyViewController() // Replace with the actual StudyViewController
+        navigationController?.pushViewController(studyVC, animated: true)
     }
 
-    @objc private func createButtonTapped() {
-        // Handle createButton tap
-        // Push to Folder VC screen
+    @objc private func createButtonTapped() {}
+        let createVC = CreateViewController() // Replace with the actual CreateViewController
+        navigationController?.pushViewController(createVC, animated: true)
     }
 
     @objc private func seeProfileButtonTapped() {
-        // Handle seeProfileButton tap
+        let profileVC = ProfileViewController() // Replace with the actual ProfileViewController
+        navigationController?.pushViewController(profileVC, animated: true)
     }
-}
 
+    .
