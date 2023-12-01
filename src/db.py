@@ -1,3 +1,8 @@
+import datetime
+import hashlib
+import os
+
+import bcrypt
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -150,20 +155,20 @@ class User(db.Model):
     self.refresh_token = self._urlsafe_base_64()
     self.session_expiration = datetime.datetime.now() + datetime.timedelta(days=1)
 
-  def verify_password(self):
+  def verify_credentials(self, password):
     """
-    Verifys password
+    Verifies password
     """
     return bcrypt.checkpw(password.encode("utf8"), self.password_digest)
   
   def verify_session_token(self, session_token):
-  """
-  Verifys session token
-  """
-  return session_token == self.session_token and datetime.datetime.now() < self.session_expiration
+    """
+    Verifies session token
+    """
+    return session_token == self.session_token and datetime.datetime.now() < self.session_expiration
 
   def verify_refresh_token(self, refresh_token):
-  """
-  Verifys refresh token
-  """
-  return refresh_token == self.refresh_token
+    """
+    Verifies refresh token
+    """
+    return refresh_token == self.refresh_token

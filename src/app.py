@@ -249,10 +249,26 @@ def login():
 
 @app.route("/logout/", methods=["POST"])
 def logout():
-    pass
+    """
+    Endpoint for logging out a user
+    """
+    success, response = extract_token(request)
+    if not success:
+        return response
+    session_token = response
+
+    user = users_dao.get_user_by_session_token(session_token)
+    if not user or not user.verify_session_token(session_token):
+        return json.dumps({"error": "invalid session token"})
+    user.session_expiration = datetime.datetime.now()
+    db.session.commit()
+    return json.dumps({"message": "you have been logged out"})
 
 @app.route("/session/", methods=["POST"])
 def refresh_session():
+    """
+    Endpoint for refreshing session
+    """
     success, response = extract_token(request)
     if not success:
         return response
@@ -271,8 +287,18 @@ def refresh_session():
 
 @app.route("/secret/", methods=["GET"])
 def secret_message():
-    pass
-
+    """
+    Endpoint for getting response
+    """
+    success, response = extract_token(request)
+    if not success:
+        return response
+    session_token = response
+    user = users_dao.get_user_by_session_token(session_token)
+    if not user or not user.verify_session_token(session_token):
+        return json.dumps({"error": "invalid session token"})
+    
+    return json.dumps({"message": "hello" + user.first_name})
 
 
 if __name__ == "__main__":
