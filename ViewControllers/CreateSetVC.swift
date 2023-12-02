@@ -2,18 +2,21 @@ import Foundation
 import SnapKit
 import UIKit
 
-protocol SetFolderName : AnyObject {
-  func setName(name : String)
+protocol FillSet : AnyObject {
+  func createItem(term : String, definition : String)
 }
 
 class CreateFolderVC: UIViewController {
   
   //MARK - Properties (view)
-  let private folderImage = UIImageView(image: UIImage.image(named: foldericon))
-  let private folderName = UITextField()
+  let private folderName = UILabel()
+  let private userName = UILabel()
+  let private termCount = UILabel()
+  let private createButton = UIButton()
 
   //MARK - PROPERTIES (DATA)
-  private var text : String = ""
+  private var term : String = ""
+  private var definition : String = ""
   private weak var delegate : SetFolderName?
    
   // MARK - viewDidLoad
