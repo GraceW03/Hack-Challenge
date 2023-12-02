@@ -200,9 +200,13 @@ class SignUpVC: UIViewController {
         NetworkManager.shared.signUp(email: email, phoneNumber: phoneNumber, username: username, password: password, confirmPassword: confirmPassword) { success in
             if success {
                 // Handle successful signup, e.g., navigate to the next screen
+                let homePageVC = HomePageVC()
+                viewController.navigationController?.pushViewController(homePageVC, animated: true)
             } else {
                 // Handle signup failure, show an error message, etc.
+                print("Login failed.")
             }
+            completion(success)
         }
     }
 }
