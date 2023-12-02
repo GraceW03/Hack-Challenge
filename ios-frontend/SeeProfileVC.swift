@@ -1,6 +1,6 @@
 import SnapKit
 
-class ProfileVC: UIViewController {
+class SeeProfileVC: UIViewController {
     // MARK: - Properties (view)
     private let profileImageView = UIImageView()
     private let nameLabel = UILabel()
@@ -142,7 +142,7 @@ class ProfileVC: UIViewController {
     }
 }
 
-extension ProfileVC: SaveProfileDelegate {
+extension SeeProfileVC: SaveProfileDelegate {
     func saveProfile(university: String, major: String) {
         self.university = university
         self.major = major

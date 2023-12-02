@@ -107,9 +107,14 @@ class LogInVC: UIViewController {
         NetworkManager.shared.logIn(username: username, password: password) { success in
             if success {
                 // Handle successful login, e.g., navigate to the next screen
+                print("Login Successful")
+                let homePageVC = HomePageVC()
+                viewController.navigationController?.pushViewController(homePageVC, animated: true)
             } else {
                 // Handle login failure, show an error message, etc.
+                print("Login failed.")
             }
+            completion(success)
         }
     }
 }
