@@ -1,0 +1,10 @@
+version: "3"
+
+services:    
+    Hack-Challege:        
+        volumes:
+            - /home/gtw25/quizrizz.db:/usr/app/quizrizz.db
+        image: gracw03/Hack-Challenge  
+        env-file: .env
+        ports:  
+            - "80:8000" 
