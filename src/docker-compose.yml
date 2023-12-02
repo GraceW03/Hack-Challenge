@@ -1,7 +1,7 @@
 version: "3"
 
 services:    
-    Hack-Challege:        
+    hack-challege:        
         volumes:
             - /home/gtw25/quizrizz.db:/usr/app/quizrizz.db
         image: gracw03/Hack-Challenge  

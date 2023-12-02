@@ -48,6 +48,10 @@ def failure_response(message, code=404):
     """
     return json.dumps({"error": message}), code
 
+@app.route("/")
+def base():
+    return "Welcome to QuizRizz"
+
 # -- CATEGORY ROUTES ------------------------------------------------------
 
 @app.route("/api/categories/")
@@ -205,7 +209,7 @@ def update_flashcard(flashcard_id):
     return success_response(flashcard.simple_serialize())
 
 
-
+# -- AUTHENTIFICATION ROUTES ---------------------------------------------
 
 @app.route("/register/", methods=["POST"])
 def register_account():
@@ -301,6 +305,7 @@ def secret_message():
     
     return json.dumps({"message": "hello " + user.username})
 
+# -- MAIN ----------------------------------------------------------
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
