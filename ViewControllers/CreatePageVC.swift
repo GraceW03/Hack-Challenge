@@ -52,7 +52,7 @@ private func setupCreateSet() {
         make.height.equalTo(40)
     }
 }
-
+}
 // MARK: - Button Actions
 
 @objc private func createFolderButtonTapped() {
