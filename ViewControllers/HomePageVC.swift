@@ -124,12 +124,12 @@ class HomePageVC: UIViewController {
     // MARK: - Button Actions
 
     @objc private func studyButtonTapped() {
-        let studyVC = StudyViewController() // Replace with the actual StudyViewController
+        let studyVC = StudyVC() // Replace with the actual StudyViewController
         navigationController?.pushViewController(studyVC, animated: true)
     }
 
     @objc private func createButtonTapped() {}
-        let createVC = CreateViewController() // Replace with the actual CreateViewController
+        let createVC = CreateSetVC() // Replace with the actual CreateViewController
         navigationController?.pushViewController(createVC, animated: true)
     }
 

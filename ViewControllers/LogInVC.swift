@@ -1,22 +1,21 @@
-//MARK - Properties (view)
-// MARK - viewDidLoad
-// MARK - Set Up Views
-// MARK: - Button Actions
-//log in credentials page
 import UIKit
 import SnapKit
 
+class SignUpVC: UIViewController {
 
-
-class LogInVC: UIViewController {
-    
     // MARK - Properties (view)
-    let pageHeader = UILabel()
-    let usernameText = UILabel()
-    let inputUsername = UITextField()
-    let passwordText = UILabel()
-    let inputPassword = UITextField()
-    let logInButton = UIButton()
+    private let pageHeader = UILabel()
+    private let emailText = UILabel()
+    private let inputEmail = UITextField()
+    private let phoneNumberText = UILabel()
+    private let inputPhoneNumber = UITextField()
+    private let usernameText = UILabel()
+    private let inputUsername = UITextField()
+    private let passwordText = UILabel()
+    private let inputPassword = UITextField()
+    private let confirmPasswordText = UILabel()
+    private let inputConfirmPassword = UITextField()
+    private let signUpButton = UIButton()
 
     // MARK - viewDidLoad
     override func viewDidLoad() {
@@ -25,11 +24,17 @@ class LogInVC: UIViewController {
 
         // Helper methods for setting up views
         setupPageHeader()
+        setupEmailText()
+        setupInputEmail()
+        setupPhoneNumberText()
+        setupInputPhoneNumber()
         setupUsernameText()
         setupInputUsername()
         setupPasswordText()
         setupInputPassword()
-        setupLogInButton()
+        setupConfirmPasswordText()
+        setupInputConfirmPassword()
+        setupSignUpButton()
     }
 
     // MARK - Set Up Views
@@ -46,13 +51,61 @@ class LogInVC: UIViewController {
         }
     }
 
+    private func setupEmailText() {
+        emailText.translatesAutoresizingMaskIntoConstraints = false
+        // Customize emailText properties
+        view.addSubview(emailText)
+        // Set up constraints for emailText using SnapKit
+        emailText.snp.makeConstraints { make in
+            make.top.equalTo(pageHeader.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(20)
+        }
+    }
+
+    private func setupInputEmail() {
+        inputEmail.translatesAutoresizingMaskIntoConstraints = false
+        // Customize inputEmail properties
+        view.addSubview(inputEmail)
+        // Set up constraints for inputEmail using SnapKit
+        inputEmail.snp.makeConstraints { make in
+            make.top.equalTo(emailText.snp.bottom).offset(8)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+            make.height.equalTo(40)
+        }
+    }
+
+    private func setupPhoneNumberText() {
+        phoneNumberText.translatesAutoresizingMaskIntoConstraints = false
+        // Customize phoneNumberText properties
+        view.addSubview(phoneNumberText)
+        // Set up constraints for phoneNumberText using SnapKit
+        phoneNumberText.snp.makeConstraints { make in
+            make.top.equalTo(inputEmail.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(20)
+        }
+    }
+
+    private func setupInputPhoneNumber() {
+        inputPhoneNumber.translatesAutoresizingMaskIntoConstraints = false
+        // Customize inputPhoneNumber properties
+        view.addSubview(inputPhoneNumber)
+        // Set up constraints for inputPhoneNumber using SnapKit
+        inputPhoneNumber.snp.makeConstraints { make in
+            make.top.equalTo(phoneNumberText.snp.bottom).offset(8)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+            make.height.equalTo(40)
+        }
+    }
+
     private func setupUsernameText() {
         usernameText.translatesAutoresizingMaskIntoConstraints = false
         // Customize usernameText properties
         view.addSubview(usernameText)
         // Set up constraints for usernameText using SnapKit
         usernameText.snp.makeConstraints { make in
-            make.top.equalTo(pageHeader.snp.bottom).offset(20)
+            make.top.equalTo(inputPhoneNumber.snp.bottom).offset(20)
             make.leading.equalToSuperview().offset(20)
         }
     }
@@ -94,45 +147,62 @@ class LogInVC: UIViewController {
         }
     }
 
-    private func setupLogInButton() {
-        logInButton.translatesAutoresizingMaskIntoConstraints = false
-        // Customize logInButton properties
-        view.addSubview(logInButton)
-        // Set up constraints for logInButton using SnapKit
-        logInButton.snp.makeConstraints { make in
+    private func setupConfirmPasswordText() {
+        confirmPasswordText.translatesAutoresizingMaskIntoConstraints = false
+        // Customize confirmPasswordText properties
+        view.addSubview(confirmPasswordText)
+        // Set up constraints for confirmPasswordText using SnapKit
+        confirmPasswordText.snp.makeConstraints { make in
             make.top.equalTo(inputPassword.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(20)
+        }
+    }
+
+    private func setupInputConfirmPassword() {
+        inputConfirmPassword.translatesAutoresizingMaskIntoConstraints = false
+        // Customize inputConfirmPassword properties
+        view.addSubview(inputConfirmPassword)
+        // Set up constraints for inputConfirmPassword using SnapKit
+        inputConfirmPassword.snp.makeConstraints { make in
+            make.top.equalTo(confirmPasswordText.snp.bottom).offset(8)
             make.leading.equalToSuperview().offset(20)
             make.trailing.equalToSuperview().offset(-20)
             make.height.equalTo(40)
         }
-        logInButton.addTarget(self, action: #selector(logInButtonTapped), for: .touchUpInside)
+    }
+
+    private func setupSignUpButton() {
+        signUpButton.translatesAutoresizingMaskIntoConstraints = false
+        // Customize signUpButton properties
+        view.addSubview(signUpButton)
+        // Set up constraints for signUpButton using SnapKit
+        signUpButton.snp.makeConstraints { make in
+            make.top.equalTo(inputConfirmPassword.snp.bottom).offset(20)
+            make.leading.equalToSuperview().offset(20)
+            make.trailing.equalToSuperview().offset(-20)
+            make.height.equalTo(40)
+        }
+        signUpButton.addTarget(self, action: #selector(signUpButtonTapped), for: .touchUpInside)
     }
 
     // MARK: - Button Actions
-    @objc private func logInButtonTapped() {
-        guard let username = inputUsername.text, !username.isEmpty,
-              let password = inputPassword.text, !password.isEmpty else {
-            // Show an alert or handle the case where either username or password is empty
+    @objc private func signUpButtonTapped() {
+        guard let email = inputEmail.text,
+              let phoneNumber = inputPhoneNumber.text,
+              let username = inputUsername.text,
+              let password = inputPassword.text,
+              let confirmPassword = inputConfirmPassword.text else {
+            // Handle missing input
             return
         }
 
-        performLogin(username: username, password: password)
-    }
-
-    private func performLogin(username: String, password: String) {
-        // Implement the logic to POST username and password to the backend
-        // You can use URLSession, Alamofire, or any other networking library for this task
-        // Example using URLSession:
-        // - Construct your API endpoint URL
-        // - Create a URLRequest with the endpoint
-        // - Set the HTTP method to POST
-        // - Set the Content-Type header to "application/json"
-        // - Encode your username and password as JSON in the HTTP body
-        // - Send the request, handle the response (success or failure)
+        // Call your signup function from NetworkManager
+        NetworkManager.shared.signUp(email: email, phoneNumber: phoneNumber, username: username, password: password, confirmPassword: confirmPassword) { success in
+            if success {
+                // Handle successful signup, e.g., navigate to the next screen
+            } else {
+                // Handle signup failure, show an error message, etc.
+            }
+        }
     }
 }
-
-
-
-    
-    

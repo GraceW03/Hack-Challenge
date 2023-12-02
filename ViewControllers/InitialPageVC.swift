@@ -92,12 +92,12 @@ class InitialPageVC: UIViewController {
 
     // MARK: - Button Actions
     @objc private func logInButtonTapped() {
-        let logInVC = LogInViewController() // Replace with your actual LogInViewController
+        let logInVC = LogInVC() // Replace with your actual LogInViewController
         navigationController?.pushViewController(logInVC, animated: true)
     }
 
     @objc private func signUpButtonTapped() {
-        let signUpVC = SignUpViewController() // Replace with your actual SignUpViewController
+        let signUpVC = SignUpVC() // Replace with your actual SignUpViewController
         navigationController?.pushViewController(signUpVC, animated: true)
     }
 }
