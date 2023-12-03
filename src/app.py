@@ -14,6 +14,7 @@ import datetime
 # define db filename
 db_filename = "quizrizz.db"
 app = Flask(__name__)
+curr_user = None
 
 # setup config
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{db_filename}"
@@ -67,13 +68,16 @@ def create_category():
     """
     Endpoint for creating a new category
     """
+    if (curr_user is None):
+        return failure_response("login")
     body = json.loads(request.data)
     name = body.get("name")
     description = body.get("description", "")
     folder = body.get("folder")
     if (name is None or folder is None):
         return failure_response("Must contain a name and folder", 400)
-    new_category = Category(name=name, description=description, folder=folder)
+    new_category = Category(name=name, description=description, folder=folder,
+                            user_id=curr_user.id)
     db.session.add(new_category)
     db.session.commit()
     return success_response(new_category.serialize(), 201)
@@ -209,6 +213,58 @@ def update_flashcard(flashcard_id):
     return success_response(flashcard.simple_serialize())
 
 
+# -- FOLDER ROUTES ---------------------------------------------
+
+@app.route("/api/folders/")
+def get_folders():
+    """
+    Endpoint for getting folders 
+    """
+    # success, response = extract_token(request)
+    # if not success:
+    #     return response
+    # session_token = response
+    # user = users_dao.get_user_by_session_token(session_token)
+    # if not user or not user.verify_session_token(session_token):
+    #     return json.dumps({"error": "log in to see folders"})
+    return success_response({"folders": curr_user.folders.split(',')})
+    
+@app.route("/api/folders/", methods=["POST"])
+def make_folder():
+    """
+    Endpoint for creating a new folder
+    """
+    # success, response = extract_token(request)
+    # if not success:
+    #     return response
+    # session_token = response
+    # user = users_dao.get_user_by_session_token(session_token)
+    # if not user or not user.verify_session_token(session_token):
+    #     return json.dumps({"error": "log in to see folders"})
+    body = json.loads(request.data)
+    name = body.get("name")
+    if name is None:
+        return failure_response("folder needs a name")
+    curr_user.add_folder(name)
+    db.session.commit()
+    return success_response({"name": name})
+    
+@app.route("/api/folders/<name>/")
+def get_decks_by_folder(name):
+    """
+    Endpoint for getting folders 
+    """
+    # success, response = extract_token(request)
+    # if not success:
+    #     return response
+    # session_token = response
+    # user = users_dao.get_user_by_session_token(session_token)
+    # if not user or not user.verify_session_token(session_token):
+    #     return json.dumps({"error": "log in to see folders"})
+    decks = Category.query.filter_by(user_id=curr_user.id, folder=name)
+    # folders = [deck.folder for deck in decks]
+    return success_response({f"{name}_decks": [deck.simple_serialize() for deck in decks]})
+
 # -- AUTHENTIFICATION ROUTES ---------------------------------------------
 
 @app.route("/register/", methods=["POST"])
@@ -243,6 +299,9 @@ def login():
 
     if not success:
         return json.dumps({"error": "Invalid credentials"})
+    
+    global curr_user 
+    curr_user = user
 
     user.renew_session()
     db.session.commit()
@@ -266,6 +325,10 @@ def logout():
     if not user or not user.verify_session_token(session_token):
         return json.dumps({"error": "invalid session token"})
     user.session_expiration = datetime.datetime.now()
+
+    global curr_user 
+    curr_user = None
+
     db.session.commit()
     return json.dumps({"message": "you have been logged out"})
 
@@ -281,6 +344,8 @@ def refresh_session():
 
     try:
         user = users_dao.renew_session(refresh_token)
+        global curr_user 
+        curr_user = user
     except:
         return json.dumps({"error": "Invalid refresh token"})
     

@@ -28,6 +28,7 @@ class Category(db.Model):
     self.name = kwargs.get("name")
     self.description = kwargs.get("description", "")
     self.folder = kwargs.get("folder")
+    self.user_id = kwargs.get("user_id")
 
   def get_flashcards(self):
     """
@@ -65,8 +66,6 @@ class Category(db.Model):
       "name": self.name,
       "description": self.description,
     }
-  
-
 
 class Flashcard(db.Model):
   """
@@ -119,6 +118,11 @@ class Flashcard(db.Model):
         }
 
 
+# class Folder(db.Model):
+#    """
+#    Folder Model
+#    """
+#    __tablename__ = "folder"
 
 
 class User(db.Model):
@@ -135,15 +139,23 @@ class User(db.Model):
   session_expiration = db.Column(db.DateTime, nullable=False, unique=False)
   refresh_token = db.Column(db.String, nullable=False, unique=False)
 
+  folders = db.Column(db.String, nullable=False, unique=False)
   categories = db.relationship('Category', backref='user')
 
   def __init__(self, **kwargs):
-        """
-        Initializes a User Object
-        """
-        self.username = kwargs.get("username")
-        self.password_digest = bcrypt.hashpw(kwargs.get("password").encode("utf8"), bcrypt.gensalt(rounds=13))
-        self.renew_session()
+    """
+    Initializes a User Object
+    """
+    self.username = kwargs.get("username")
+    self.password_digest = bcrypt.hashpw(kwargs.get("password").encode("utf8"), bcrypt.gensalt(rounds=13))
+    self.folders = ""
+    self.renew_session()
+
+  def add_folder(self, name):
+     if self.folders != "":
+        self.folders += ","
+     self.folders = self.folders + name
+
 
   def _urlsafe_base_64(self):
     """
