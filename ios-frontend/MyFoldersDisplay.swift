@@ -64,19 +64,19 @@ class DisplayFoldersVC: UIViewController {
 }
 
 extension DisplayFoldersVC : NewFolders {
-  addNewFolder(newFolder : String) {
-  Folder f = Folder(name : newFolder, cards : [])
-  folders.append(f)
-  }
+    addNewFolder(newFolder : String) {
+      Folder f = Folder(name : newFolder, cards : [])
+      folders.append(f)
+    }
 }
 
 extension DisplayFoldersVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, 
     didSelectItemAt indexPath: IndexPath) {
-      guard let f = collectionView.cellForItem(at: indexPath) as? FilterCell else {
+      guard let f = collectionView.cellForItem(at: indexPath) as? FolderCell else {
             return
           }
-      selectedFilter = filters[indexPath.item]
+      selectedFolder = folders[indexPath.item]
       f.configure(folder: folders[indexPath.item])
       collectionView.reloadItems(at: [indexPath])
       let ff = folders[indexPath.item]
