@@ -56,7 +56,6 @@ class EditProfileVC: UIViewController {
     }
 
     private func setupUniversity() {
-        // Set up university label
         universityLabel.text = "University"
         universityLabel.font = .systemFont(ofSize: 16)
         universityLabel.textColor = .black
@@ -67,7 +66,7 @@ class EditProfileVC: UIViewController {
             make.leading.equalToSuperview().offset(16)
         }
         
-        // Set up university text field
+        
         universityTextField.text = university
         universityTextField.layer.borderWidth = 1.0
         view.addSubview(universityTextField)

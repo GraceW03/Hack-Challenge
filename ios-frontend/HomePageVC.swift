@@ -30,16 +30,14 @@ class HomePageVC: UIViewController {
         setupSeeProfileButton()
     }
 
-    // MARK - Set Up Views
-    // ...
-
+ 
     // MARK: - Set Up Views
 
     private func setupProfileIcon() {
         profileIcon.translatesAutoresizingMaskIntoConstraints = false
-        // Customize profileIcon properties
+       
         view.addSubview(profileIcon)
-        // Set up constraints for profileIcon using SnapKit
+       
         profileIcon.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(20)
@@ -91,9 +89,9 @@ class HomePageVC: UIViewController {
         createButton.translatesAutoresizingMaskIntoConstraints = false
         createButton.setTitle("Create", for: .normal)
         createButton.backgroundColor = UIColor.green
-        // Customize createButton properties
+      
         view.addSubview(createButton)
-        // Set up constraints for createButton using SnapKit
+       
         createButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(studyButton.snp.bottom).offset(16)
