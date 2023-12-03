@@ -2,21 +2,18 @@ import Foundation
 import SnapKit
 import UIKit
 
-protocol FillSet : AnyObject {
-  func createItem(term : String, definition : String)
+protocol SetFolderName : AnyObject {
+  func setName(name : String)
 }
 
 class CreateFolderVC: UIViewController {
   
   //MARK - Properties (view)
-  let private folderName = UILabel()
-  let private userName = UILabel()
-  let private termCount = UILabel()
-  let private createButton = UIButton()
+  let private folderImage = UIImageView(image: UIImage.image(named: foldericon))
+  let private folderName = UITextField()
 
   //MARK - PROPERTIES (DATA)
-  private var term : String = ""
-  private var definition : String = ""
+  private var text : String = ""
   private weak var delegate : SetFolderName?
    
   // MARK - viewDidLoad
@@ -51,8 +48,8 @@ class CreateFolderVC: UIViewController {
 
   // MARK: - Button Actions
 
-  @objc private func pushSet() {
-    let insideFolderVC = InsideFolderVC(text : text, delegate : self) 
+  @objc private func pushText() {
+    let finalFolderVC = FinalCreateVC(text : text, delegate : self) 
     navigationController?.pushViewController(finalFolderVC, animated: true)
     delegate?.setName(name : textField.text ?? "")
   }
