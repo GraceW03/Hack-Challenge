@@ -254,4 +254,61 @@ class NetworkManager {
                 }
             }
     }
-}
+    // MARK: - Folder API Methods
+
+    // Make a folder for a user
+    func makeFolderForUser(name: String, completion: @escaping (Bool) -> Void) {
+        let endpoint = "http://34.150.222.142/api/folders/"
+
+        let parameters: [String: Any] = [
+            "name": name
+        ]
+
+        AF.request(endpoint, method: .post, parameters: parameters, encoding: JSONEncoding.default)
+            .validate()
+            .response { response in
+                switch response.result {
+                case .success:
+                    completion(true)
+                case .failure(let error):
+                    print("Error in NetworkManager.makeFolderForUser: \(error.localizedDescription)")
+                    completion(false)
+                }
+            }
+    }
+
+    // Get all folders for a user
+    func getAllFoldersForUser(completion: @escaping ([Folder]) -> Void) {
+        let endpoint = "http://34.150.222.142/api/folders/"
+
+        AF.request(endpoint, method: .get)
+            .validate()
+            .responseDecodable(of: [Folder].self) { response in
+                switch response.result {
+                case .success(let folders):
+                    completion(folders)
+                case .failure(let error):
+                    print("Error in NetworkManager.getAllFoldersForUser: \(error.localizedDescription)")
+                    completion([])
+                }
+            }
+    }
+
+    // Get all categories within a folder
+    func getAllCategoriesInFolder(folderName: String, completion: @escaping ([Category]) -> Void) {
+        let endpoint = "http://34.150.222.142/api/folders/\(folderName)/"
+
+        AF.request(endpoint, method: .get)
+            .validate()
+            .responseDecodable(of: [Category].self) { response in
+                switch response.result {
+                case .success(let categories):
+                    completion(categories)
+                case .failure(let error):
+                    print("Error in NetworkManager.getAllCategoriesInFolder: \(error.localizedDescription)")
+                    completion([])
+                }
+            }
+    }
+
+    }
