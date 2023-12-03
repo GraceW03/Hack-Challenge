@@ -11,10 +11,10 @@ private let photo = UIImageView(image : UIImage(named: placeholderlogo))
 private let cardCollectionView = UICollectionView()
 private let studyButton = UIButton()
 
-    init(sett: SetFolder, delegate: ExpandSet) {
+    init(set: SetFolder, delegate: ExpandSet) {
         self.cards = sett.cards
         self.name = sett.name
-        self.expandFolderDelegate = delegate
+        self.expandSetDelegate = delegate
         super.init(nibName: nil, bundle: nil)
     }
     
