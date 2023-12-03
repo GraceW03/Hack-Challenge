@@ -1,8 +1,7 @@
 import Foundation
-import UIKit
-import SnapKit
 
 public struct Folder : Codable {
+    let id : Int
     let name : String
-    let cards : [Card]
+    let cats : [Category]
 }
