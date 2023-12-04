@@ -23,8 +23,8 @@ fully integrated with the back-end.
 
 Back-end: We have three tables in our database. There is a one-to-many relationship
 between users and sets, and a one-to-many relationship between sets and cards. There
-are multiple routes in the app.py. Our api specification can be found in the file
-api_spec.pdf.
+are multiple routes in the app.py. Our api specification can be found at 
+https://drive.google.com/file/d/1N2CDxzA3JpRbSsiAfU-etqoXHdiPOgz8/view?usp=sharing.
 
 Design: All designs and the design kit are completed, and can be found here
-https://www.figma.com/file/q74plN1p82yZoJOd2NqgSZ/QuizRizz%3A-Hack-Challenge?type=design&node-id=5-117&mode=design&t=wdMJ2ilJ6gvohTm3-0
+https://www.figma.com/file/q74plN1p82yZoJOd2NqgSZ/QuizRizz%3A-Hack-Challenge?type=design&node-id=5-117&mode=design&t=wdMJ2ilJ6gvohTm3-0.

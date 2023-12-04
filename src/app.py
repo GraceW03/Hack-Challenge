@@ -220,13 +220,6 @@ def get_folders():
     """
     Endpoint for getting folders 
     """
-    # success, response = extract_token(request)
-    # if not success:
-    #     return response
-    # session_token = response
-    # user = users_dao.get_user_by_session_token(session_token)
-    # if not user or not user.verify_session_token(session_token):
-    #     return json.dumps({"error": "log in to see folders"})
     return success_response({"folders": curr_user.folders.split(',')})
     
 @app.route("/api/folders/", methods=["POST"])
@@ -234,13 +227,6 @@ def make_folder():
     """
     Endpoint for creating a new folder
     """
-    # success, response = extract_token(request)
-    # if not success:
-    #     return response
-    # session_token = response
-    # user = users_dao.get_user_by_session_token(session_token)
-    # if not user or not user.verify_session_token(session_token):
-    #     return json.dumps({"error": "log in to see folders"})
     body = json.loads(request.data)
     name = body.get("name")
     if name is None:
@@ -254,15 +240,7 @@ def get_decks_by_folder(name):
     """
     Endpoint for getting folders 
     """
-    # success, response = extract_token(request)
-    # if not success:
-    #     return response
-    # session_token = response
-    # user = users_dao.get_user_by_session_token(session_token)
-    # if not user or not user.verify_session_token(session_token):
-    #     return json.dumps({"error": "log in to see folders"})
     decks = Category.query.filter_by(user_id=curr_user.id, folder=name)
-    # folders = [deck.folder for deck in decks]
     return success_response({f"{name}_decks": [deck.simple_serialize() for deck in decks]})
 
 # -- AUTHENTIFICATION ROUTES ---------------------------------------------
