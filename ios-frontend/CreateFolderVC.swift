@@ -52,6 +52,13 @@ class CreateFolderVC: UIViewController {
     let finalFolderVC = FinalCreateVC(text : text, delegate : self) 
     navigationController?.pushViewController(finalFolderVC, animated: true)
     delegate?.setName(name : textField.text ?? "")
+    NetworkManager.shared.makeFolderForUser(name: "Allyana") { success in
+            if success {
+                success
+            } else {
+                
+            }
+        }
   }
 
 }
