@@ -57,8 +57,14 @@ class DisplayFoldersVC: UIViewController {
   // MARK: - Button Actions
 
   func expandFolder(folder : Folder) {
-    let insideFolderVC = InsideFolderVC(folder: folder, delegate: self)
-    navigationController?.pushViewController(insideFolderVC, animated: true)
+    NetworkManager.shared.getAllCategoriesInFolder(folderName : folder.name) { success in
+            if success {
+                let insideFolderVC = InsideFolderVC(folder: folder, delegate: self)
+                navigationController?.pushViewController(insideFolderVC, animated: true)
+            } else {
+                
+            }
+        }
   }
 
 }
