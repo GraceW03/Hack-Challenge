@@ -7,7 +7,6 @@ with private flashcard decks for an easy and effective learning experience.
 
 Github Repo: https://github.com/GraceW03/Hack-Challenge.git
 
-
 Description:
 The app makes users log in/create an account, so any flashcard decks that are 
 created are personal to each user. Users start out on the homepage, which
@@ -28,3 +27,7 @@ https://drive.google.com/file/d/1N2CDxzA3JpRbSsiAfU-etqoXHdiPOgz8/view?usp=shari
 
 Design: All designs and the design kit are completed, and can be found here
 https://www.figma.com/file/q74plN1p82yZoJOd2NqgSZ/QuizRizz%3A-Hack-Challenge?type=design&node-id=5-117&mode=design&t=wdMJ2ilJ6gvohTm3-0.
+
+Other notes for the grader: The final project isn't running on xcode, so we don't
+have screenshots or a video. All of the materials and code that we do have can 
+be found in the repo.
