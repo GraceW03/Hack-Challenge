@@ -2,34 +2,42 @@ import Foundation
 import SnapKit
 import UIKit
 
-protocol SetFolderName : AnyObject {
-  func setName(name : String)
+protocol FillSet : AnyObject {
+  func createItem(term : String, definition : String)
 }
 
-class CreateFolderVC: UIViewController {
+class CreateSetVC: UIViewController {
   
   //MARK - Properties (view)
-  let private folderImage = UIImageView(image: UIImage.image(named: foldericon))
-  let private folderName = UITextField()
+  let private folderName = UILabel()
+  let private userName = UILabel()
+  let private termCount = UILabel()
+  let private createButton = UIButton()
+  let private termField = UITextField()
+  let private descriptionField = UITextField()
 
   //MARK - PROPERTIES (DATA)
-  private var text : String = ""
+  private var term : String = ""
+  private var definition : String = ""
   private weak var delegate : SetFolderName?
    
   // MARK - viewDidLoad
-    override func viewDidLoad() {
+  override func viewDidLoad() {
       super.viewDidLoad()
       view.backgroundColor = UIColor.white
 
-      setupFolder()
+      setupCategory()
       //helper methods for setting up views
-    }
+  }
     
 
   // MARK - Set Up Views
-  private func setupFolder() {
+  private func setupCategory() {
+  
   view.addSubview(folderImage)
   view.addSubview(folderName)
+  view.addSubview(termCount)
+  view.addSubview(createButton)
 
   folderImage.snp.makeConstraints = { make in
           make.leading.equalToSuperview().offset(124)
@@ -48,10 +56,18 @@ class CreateFolderVC: UIViewController {
 
   // MARK: - Button Actions
 
-  @objc private func pushText() {
-    let finalFolderVC = FinalCreateVC(text : text, delegate : self) 
+  @objc private func pushSet() {
+    let insideFolderVC = InsideFolderVC(text : text, delegate : self) 
     navigationController?.pushViewController(finalFolderVC, animated: true)
-    delegate?.setName(name : textField.text ?? "")
+      delegate?.createItem(term : termField.text ?? "", definition: descriptionField.text ?? "")
+      NetworkManager.shared.createCategory(categoryID: id, content: term, answer: definition) { success in
+            if success {
+                let insideFolderVC = InsideFolderVC(text : text, delegate : self) 
+    navigationController?.pushViewController(finalFolderVC, animated: true)
+            } else {
+                // Handle signup failure, show an error message, etc.
+            }
+        }
   }
 
 }
