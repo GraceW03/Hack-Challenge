@@ -48,9 +48,9 @@ class HomePageVC: UIViewController {
     private func setupPageHeader() {
         pageHeader.translatesAutoresizingMaskIntoConstraints = false
         pageHeader.text = "Your Page Header"
-        // Customize pageHeader properties
+       
         view.addSubview(pageHeader)
-        // Set up constraints for pageHeader using SnapKit
+     
         pageHeader.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(profileIcon.snp.bottom).offset(16)
@@ -60,9 +60,9 @@ class HomePageVC: UIViewController {
     private func setupPageText() {
         pageText.translatesAutoresizingMaskIntoConstraints = false
         pageText.text = "Your Page Text"
-        // Customize pageText properties
+       
         view.addSubview(pageText)
-        // Set up constraints for pageText using SnapKit
+   
         pageText.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(pageHeader.snp.bottom).offset(8)
@@ -73,9 +73,9 @@ class HomePageVC: UIViewController {
         studyButton.translatesAutoresizingMaskIntoConstraints = false
         studyButton.setTitle("Study", for: .normal)
         studyButton.backgroundColor = UIColor.blue
-        // Customize studyButton properties
+       
         view.addSubview(studyButton)
-        // Set up constraints for studyButton using SnapKit
+
         studyButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(pageText.snp.bottom).offset(24)
@@ -105,9 +105,9 @@ class HomePageVC: UIViewController {
         seeProfileButton.translatesAutoresizingMaskIntoConstraints = false
         seeProfileButton.setTitle("See Profile", for: .normal)
         seeProfileButton.backgroundColor = UIColor.orange
-        // Customize seeProfileButton properties
+        
         view.addSubview(seeProfileButton)
-        // Set up constraints for seeProfileButton using SnapKit
+      
         seeProfileButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(createButton.snp.bottom).offset(16)
@@ -120,17 +120,17 @@ class HomePageVC: UIViewController {
     // MARK: - Button Actions
 
     @objc private func studyButtonTapped() {
-        let studyVC = StudyVC() // Replace with the actual StudyViewController
+        let studyVC = StudyVC()
         navigationController?.pushViewController(studyVC, animated: true)
     }
 
     @objc private func createButtonTapped() {}
-        let createVC = CreateSetVC() // Replace with the actual CreateViewController
+        let createVC = CreateSetVC()
         navigationController?.pushViewController(createVC, animated: true)
     }
 
     @objc private func seeProfileButtonTapped() {
-        let profileVC = ProfileViewController() // Replace with the actual ProfileViewController
+        let profileVC = ProfileViewController() 
         navigationController?.pushViewController(profileVC, animated: true)
     }
 

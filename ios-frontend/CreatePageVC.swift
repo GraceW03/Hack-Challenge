@@ -32,7 +32,7 @@ private func setupCreateFolder() {
 
     createFolder.snp.makeConstraints { make in
         make.centerX.equalToSuperview()
-        make.centerY.equalToSuperview().offset(-40) // Adjust the offset as needed
+        make.centerY.equalToSuperview().offset(-40) 
         make.width.equalTo(200)
         make.height.equalTo(40)
     }
@@ -56,13 +56,13 @@ private func setupCreateSet() {
 // MARK: - Button Actions
 
 @objc private func createFolderButtonTapped() {
-    // Implement create folder button action here
-    let createFolderVC = CreateFolderViewController() // Replace with your actual CreateFolderViewController
+    
+    let createFolderVC = CreateFolderViewController() 
     navigationController?.pushViewController(createFolderVC, animated: true)
 }
 
 @objc private func createSetButtonTapped() {
-    // Implement create set button action here
-    let createSetVC = CreateSetViewController() // Replace with your actual CreateSetViewController
+   
+    let createSetVC = CreateSetViewController() 
     navigationController?.pushViewController(createSetVC, animated: true)
 }

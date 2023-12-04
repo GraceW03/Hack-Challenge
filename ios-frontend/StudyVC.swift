@@ -1,7 +1,3 @@
-//MARK - Properties (view)
-// MARK - viewDidLoad
-// MARK - Set Up Views
-// MARK: - Button Actions
 import UIKit
 import SnapKit
 
@@ -20,7 +16,7 @@ class StudyVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
 
-        // Helper methods for setting up views
+        
         setupProfileIcon()
         setupPageHeader()
         setupPageText()

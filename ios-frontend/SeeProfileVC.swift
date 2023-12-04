@@ -33,7 +33,7 @@ class SeeProfileVC: UIViewController {
     // MARK: - Set Up Views
 
     private func setupProfileImageView() {
-        profileImageView.image = UIImage(named: "your_profile_image_name") // Replace with your image name
+        profileImageView.image = UIImage(named: "profile_image_name")
         view.addSubview(profileImageView)
         profileImageView.layer.borderWidth = 1.0
         profileImageView.layer.cornerRadius = 128
@@ -79,7 +79,7 @@ class SeeProfileVC: UIViewController {
     }
 
     private func setupUniversityLabel() {
-        universityLabel.text = "Your University" // Replace with actual university name
+        universityLabel.text = "Your University" 
         universityLabel.font = .systemFont(ofSize: 20)
         universityLabel.textColor = .black
         view.addSubview(universityLabel)
@@ -90,7 +90,7 @@ class SeeProfileVC: UIViewController {
     }
 
     private func setupMajorLabel() {
-        majorLabel.text = "Your Major" // Replace with actual major
+        majorLabel.text = "Your Major" 
         majorLabel.font = .systemFont(ofSize: 20)
         majorLabel.textColor = .black
         view.addSubview(majorLabel)
@@ -129,14 +129,10 @@ class SeeProfileVC: UIViewController {
     // MARK: - Button Actions
 
     @objc private func seeStudySetsButtonTapped() {
-        // Handle seeStudySetsButton tap
-        // Call the delegate method to save data
         delegate?.saveProfile(university: university, major: major)
     }
 
     @objc private func editProfileButtonTapped() {
-        // Handle editProfileButton tap
-        // Corrected the creation of EditProfileVC instance
         let editProfileVC = EditProfileVC(university: university, major: major, saveProfileDelegate: self)
         navigationController?.pushViewController(editProfileVC, animated: true)
     }
@@ -146,8 +142,6 @@ extension SeeProfileVC: SaveProfileDelegate {
     func saveProfile(university: String, major: String) {
         self.university = university
         self.major = major
-
-        // Update UI with saved data
         universityLabel.text = university
         majorLabel.text = major
     }
